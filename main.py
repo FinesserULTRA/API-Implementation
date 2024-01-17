@@ -1,56 +1,48 @@
-
 import requests
-
-url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid=ac7c75b9937a495021393024d0a90c44&units=metric'
-
-def by_city():
-    city = input('Enter your city : ')
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid=ac7c75b9937a495021393024d0a90c44&units=metric'.format(city)
-    res = requests.get(url)
-    data = res.json()
-    show_data(data)
+import xml.etree.ElementTree as ET
 
 
-def by_location():
-    res = requests.get('https://ipinfo.io/')
-    data = res.json()
-    location = data['loc'].split(',')
-    latitude = location[0]
-    longitude = location[1]
+# API class
+class WeatherApiClient:
+    # constructor
+    def __init__(self, api_key):
+        self.api_key = api_key
 
-    url = 'http://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=ac7c75b9937a495021393024d0a90c44&units=metric'.format(latitude, longitude)
+    # request data from api
+    def getWeather(self, city):
+        url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={self.api_key}&units=metric'
+        res = requests.get(url)
+        return res.json()
 
-    res = requests.get(url)
-    data = res.json()
-    show_data(data)
+    # Show output
+    def showData(self, data):
+        temp = data['main']['temp']
+        description = data['weather'][0]['description']
+        zone = data['timezone'] / 3600
 
-
-def show_data(data):
-    temp = data['main']['temp']
-    wind_speed = data['wind']['speed']
-    latitude = data['coord']['lat']
-    longitude = data['coord']['lon']
-    description = data['weather'][0]['description']
-
-    print()
-    print('Temperature : {} degree celcius'.format(temp))
-    print('Wind Speed : {} m/s'.format(wind_speed))
-    print('Latitude : {}'.format(latitude))
-    print('Longitude : {}'.format(longitude))
-    print('Description : {}'.format(description))
-
-
-def main():
-    print('1. Get data By city')
-    print('2. Get data By location')
-    choice = input('Enter your choice : ')
-
-    if choice == '1':
-        by_city()
-
-    else:
-        by_location()
+        print(f"\nTemperature: {temp} degree Celsius")
+        print(f"Description: {description}")
+        print(f"Zone: GMT {zone}")
 
 
 if __name__ == '__main__':
-    main()
+
+    # Menu
+    print("\t\tWeather Forecast API\n")
+    print("1) Enter API Key")
+    print("2) Use Default API Key")
+    choice = input("Choice: ")
+
+    # get api key
+    api_key = ''
+    if choice == '1':
+        api_key = input("Enter API Key: ")
+    elif choice == '2':
+        api_key = 'ac7c75b9937a495021393024d0a90c44'
+
+    # Create object
+    weather_api = WeatherApiClient(api_key)
+
+    # Use functions
+    data = weather_api.getWeather(input("Enter City: "))
+    weather_api.showData(data)
