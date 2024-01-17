@@ -6,6 +6,7 @@ The Weather API Program is a Python application that utilizes the OpenWeather AP
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Requirements](#requirements)
 - [Usage](#usage)
 - [API Key](#api-key)
 - [Functions](#functions)
@@ -21,6 +22,29 @@ The Weather API Program is designed to fetch and display current weather data fo
 - Fetches real-time weather data from the OpenWeather API.
 - Allows users to enter their OpenWeather API key or use a default key.
 - Displays temperature, weather description, and the time zone of the specified city.
+
+## Requirements
+- Requires request package
+- API Key for OpenWeather
+
+## Installations
+
+1. **Clone Repository**
+
+   ```bash
+   https://github.com/FinesserULTRA/API-Implementation.git
+   ```
+2. **Get Requests**
+
+   ```bash
+   pip install requests
+   ```
+
+3. **Change directory**
+
+   ```bash
+   cd API-Implementation
+   ```
 
 ## Usage
 
