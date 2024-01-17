@@ -1,6 +1,6 @@
-import requests
-import xml.etree.ElementTree as ET
+# API program for Weather using openWeather
 
+import requests
 
 # API class
 class WeatherApiClient:
